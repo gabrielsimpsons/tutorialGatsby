@@ -6,6 +6,11 @@
 
 module.exports = {
   /* Your site config here */
+  siteMetadata: {
+    title: `First gatsby app`,
+    siteUrl: `https://gatsbyjs.com`,
+    description: `This is my first gatsby application`,
+  },
   plugins: [
     {
       resolve: `gatsby-plugin-typography`,
