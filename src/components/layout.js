@@ -13,12 +13,30 @@ const ListLink = props => (
 export default function Layout({ children }) {
   const data = useStaticQuery(graphql`
     query {
-      site {
-        siteMetadata {
-          title
+        allFile {
+          edges {
+            node {
+              accessTime
+              base
+              id
+              prettySize
+              name
+              extension
+              relativeDirectory
+              birthTime
+            }
+          }
+        }
+        allSite {
+          nodes {
+            siteMetadata {
+              description
+              siteUrl
+              title
+            }
+          }
         }
       }
-    }
   `)
   return (
     <div
@@ -37,29 +55,21 @@ export default function Layout({ children }) {
             font-style: normal;
           `}
         >
-          {data.site.siteMetadata.title}
+          {data.allSite.nodes.find(node => node.siteMetadata).siteMetadata.title}
         </h3>
       </Link>
-      <Link
+      {data.allFile.edges.filter(({ node }) => node.relativeDirectory === 'pages' && node.extension === 'js' && node.name !== 'index').map(({ node }, index) => (<Link key={index} to={`/${node.name}`} css={css`float: right;`}>{node.name}</Link>))}
+      {/* <Link
         to={`/about/`}
         css={css`
           float: right;
+          text-transform: capitalize;
+          padding-left: 5px;
         `}
       >
         About
-      </Link>
+      </Link> */}
       {children}
     </div>
-    // <div style={{ margin: `3rem auto`, maxWidth: 650, padding: `0 1rem` }}>
-    //   <header>
-    //     <Link to="/" style={{textShadow:`none` , backgroundImage:`none`}}>
-    //       <h3 style={{ display:`inline`}}>This is the title</h3>
-    //     </Link>
-    //     <ul style={{ listStyle: `none`, float: `right` }}><ListLink to="/">Home</ListLink>
-    //       <ListLink to="/about/">About</ListLink>
-    //       <ListLink to="/contact/">Contact</ListLink></ul>
-    //   </header>
-    //   {children}
-    // </div>
   )
 }

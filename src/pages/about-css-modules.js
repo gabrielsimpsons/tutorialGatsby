@@ -1,18 +1,19 @@
 import React from "react"
 
 import Container from "../components/container"
+import Layout from "../components/layout"
 import styles from './about-css-modules.css'
 
 const User = props => <div className={styles.user}>
-  <img src={props.avatar} className={styles.avatar} alt=""/>
+  <img src={props.avatar} className={styles.avatar} alt="" />
   <div className={styles.description}>
     <h2 className={styles.username}>{props.username}</h2>
     <p className={styles.excerpt}>{props.excerpt}</p>
   </div>
 </div>
 
-export default function About () {
-  return <Container>
+export default function About() {
+  return <Layout><Container>
     <h1>About css modules</h1>
     <p>Css modules are cool</p>
     <User username="Jane Doe"
@@ -24,5 +25,5 @@ export default function About () {
       avatar="https://s3.amazonaws.com/uifaces/faces/twitter/vladarbatov/128.jpg"
       excerpt="I'm Bob Smith, a vertically aligned type of guy. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
     />
-  </Container>
+  </Container></Layout>
 }
